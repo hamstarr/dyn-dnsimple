@@ -12,10 +12,7 @@ You will need to have an existing A Record to modify.
 
 ## Usage
 
-    $ ruby dyn-dnsimple.rb start
-    $ ruby dyn-dnsimple.rb restart
-    $ ruby dyn-dnsimple.rb stop
-    $ ruby dyn-dnsimple.rb run (to run in foreground)
+    $ ruby dyn-dnsimple.rb
 
 
 ## TODO
