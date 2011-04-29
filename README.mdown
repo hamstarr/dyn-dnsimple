@@ -13,6 +13,7 @@ Edit the config file with your dnsimple and domain settings
   $ ruby dyndnsimple.rb run (to run in foreground)
   
 ## TODO
-  Write tests
-  Create a launch file for OSX
-  refactor
+
+Write tests
+Create a launch file for OSX
+refactor

@@ -28,8 +28,9 @@ def set_new_ip
   records = DNSimple::Record.all(@config['domain'])
 
   records.each do |record|
+    puts record.inspect
     #only update if the record is different from the current external IP
-    if record.name == @config['hostname'] && record.content != new_ip
+    if record.name == @config['hostname'] && record.record_type == "A" && record.content != new_ip
       @log.info "DynDNSimple: External IP is #{new_ip}"
       record.content = new_ip.to_s
       #record.content = "1.2.3.4"
