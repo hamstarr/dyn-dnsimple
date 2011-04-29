@@ -1,4 +1,7 @@
 source "http://rubygems.org"
 
-gem 'daemons'
 gem 'dnsimple-ruby'
+gem 'em-http-request'
+gem 'sinatra'
+gem 'thin'
+gem 'yaml'
