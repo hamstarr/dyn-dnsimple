@@ -1,0 +1,18 @@
+# dyndnsimple
+
+## Setup
+
+Run bundle install
+Edit the config file with your dnsimple and domain settings
+
+## Usage
+
+  $ ruby dyndnsimple.rb start
+  $ ruby dyndnsimple.rb restart
+  $ ruby dyndnsimple.rb stop
+  $ ruby dyndnsimple.rb run (to run in foreground)
+  
+## TODO
+  Write tests
+  Create a launch file for OSX
+  refactor

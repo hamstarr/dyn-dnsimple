@@ -1,0 +1,6 @@
+dnsimple:
+  username: you@yourdomain.com
+  password: yourpassword
+domain: example.com
+hostname: remote
+update_frequency: 360
