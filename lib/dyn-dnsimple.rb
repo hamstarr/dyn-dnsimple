@@ -25,7 +25,6 @@ class DynDNSimple
   end
 
   def self.need_to_update?(record)
-    record.name == $config['hostname'] && record.record_type == "A"
-     # && record.content != $current_ip
+    record.name == $config['hostname'] && record.record_type == "A" && record.content != $current_ip
   end
 end
