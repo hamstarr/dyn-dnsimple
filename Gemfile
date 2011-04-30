@@ -1,7 +1,6 @@
-source "http://rubygems.org"
+source :gemcutter
 
 gem 'dnsimple-ruby'
 gem 'em-http-request'
 gem 'sinatra'
 gem 'thin'
-gem 'yaml'

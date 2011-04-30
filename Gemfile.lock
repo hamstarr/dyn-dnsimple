@@ -29,7 +29,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  daemons
   dnsimple-ruby
   em-http-request
   sinatra
