@@ -9,4 +9,4 @@ class App < Sinatra::Base
   end
 end
 
-App.run!({:port => 3333})
+App.run!({:port => $config['http_port']})
