@@ -2,21 +2,39 @@
 
 DynDNSimple is a ruby daemon for regularly updating a DNSimple hosted domain A Record based on your current external IP Address.
 
+For more information about DNSimple go to: http://dnsimple.com
+
 ## Setup
 
 You will need to have an existing A Record to modify.
 
-1. Run bundle install
-2. Edit the config file with your DNSimple and domain settings
+Open Terminal and do the following:
+  
+    cd ~/bin (or mkdir ~/bin && cd ~/bin)
+    git clone git://github.com/hamstarr/dyn-dnsimple.git
+    cd dyn-dnsimple
+    gem install bundle
+    bundle install
+    chmod +x ~/bin/dyn-dnsimple/dyn-dnsimple
 
 
-## Usage
+## Start DynDNSimple automatically
 
-    $ ruby dyn-dnsimple.rb
+    launchctl submit -l DynDNSimple -- ~/bin/dns-dnsimple/dyn-dnsimple
+
+
+### Stop DynDNSimple from starting automatically
+
+    launchctl remove DynDNSimple
+
+
+## Start DynDNSimple manually
+
+    ~/bin/dyn-dnsimple/dyn-dnsimple
 
 
 ## TODO
 
 - Write tests
-- Create a launch file for OSX
-- refactor
+- Allow update of config details form web interface
+- Allow creation of an A record if one doesn't exist already
