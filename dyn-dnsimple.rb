@@ -15,7 +15,7 @@ require File.join(APP_ROOT, 'lib', 'dyn-dnsimple.rb')
 
 EventMachine.run do
   # bring in the Sinatra web app
-  require File.join(APP_ROOT, 'lib', 'app.rb')
+  require File.join(APP_ROOT, 'app', 'app.rb')
 
   EventMachine.add_periodic_timer($config['update_frequency']) {
     DynDNSimple.refresh

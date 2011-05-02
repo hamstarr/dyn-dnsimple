@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+%head
+  %meta{:charset => "utf-8"}
+  /[if lt IE 9]
+    %script{:src => "http://html5shim.googlecode.com/svn/trunk/html5.js"}
+  %link{:href => "/css/style.css", :media => "screen", :rel => "stylesheet"}
+  %title= "DynDNSimple"
+%body
+  %section.main
+    %h1 Your External IP: #{$current_ip}
+    %h2
+      %a{:href => "/refresh"} Update your IP &rarr;
