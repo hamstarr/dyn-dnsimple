@@ -13,6 +13,7 @@ GEM
       eventmachine (>= 0.12.9)
     escape_utils (0.2.3)
     eventmachine (0.12.10)
+    haml (3.1.1)
     httparty (0.7.7)
       crack (= 0.1.8)
     rack (1.2.2)
@@ -31,5 +32,6 @@ PLATFORMS
 DEPENDENCIES
   dnsimple-ruby
   em-http-request
+  haml
   sinatra
   thin
