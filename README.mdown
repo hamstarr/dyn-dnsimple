@@ -38,4 +38,3 @@ Open Terminal and do the following:
 - Write tests
 - Allow update of config details form web interface
 - Allow creation of an A record if one doesn't exist already
-- Display current IP upon initial index.haml view load
