@@ -16,6 +16,9 @@ $current_ip = ""
 require File.join(APP_ROOT, 'lib', 'dyn-dnsimple.rb')
 
 EventMachine.run do
+  # Refresh the IP upon initial load
+  DynDNSimple.refresh
+
   # bring in the Sinatra web app
   require File.join(APP_ROOT, 'app', 'app.rb')
 
