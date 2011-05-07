@@ -1,30 +1,89 @@
 .main {
   display: block;
-  width: 525px;
+  width: 440px;
   margin: 100px auto 0;
-}
-
-.main h1, .main h2 {
   font-family: Helvetica, Arial,sans-serif;
+}
+.main h1 {
+  font-size:2em;
+  text-align:center;
+  margin-bottom:50px;
+}
+.main .settings {
   display: block;
-  width: 525px;
+}
+.main .ip, .main .link {
+  display: block;
   height: 50px;
   line-height: 50px;
   padding: 0 10px;
-  margin: 0;
+  margin:1px 0 0 0;
   text-shadow: #fff 0px 1px 0px;
-  text-align: center;
 }
 
-.main h1 {
+.main .ip, .main .link {
   background: #ccc;
   color: #666;
 }
-.main h2 {
+
+.main .link a {
+  color: #666;
+  text-decoration:none;
+}
+.main .link a:hover {
+  color: #333;
+  text-decoration:underline;
+}
+
+.main .ip a:hover {
+  text-decoration:none;
+}
+
+.main .ip a:hover:after {
+  content: attr(title);
+}
+
+.field {
+  height:40px;
+  width:440px;
+}
+
+.settings .field {
+  margin-top:1px;
   background: #eee;
 }
 
-.main h2 a {
-  color: #666;
-  text-shadow: #fff 0px -1px 0px;
+#form .field label, .field .label {
+  width: 130px;
+  float: left;
+  text-align:right;
+  padding-right:20px;
+  font-size: 16px;
+  line-height: 40px;
+  height:40px;
+  margin: 0;
+}
+
+#form .field input[type="text"],
+#form .field input[type="password"],
+.field .setting {
+  width: 260px;
+  height:30px;
+  line-height:30px;
+  font-size:16px;
+  margin: 0;
+  padding-left:10px;
+  padding-right:10px;
+}
+
+.field .setting {
+  display:inline-block;
+  line-height:40px;
+  height:40px;
+  font-weight:bold;
+}
+
+#form .button input[type="submit"] {
+  margin-left: 150px;
+  font-size: 16px;
 }

@@ -10,19 +10,17 @@ require 'dnsimple'
 
 APP_ROOT = File.dirname(__FILE__)
 
-$config = YAML.load_file(File.join(APP_ROOT, 'config', 'config.yml'))
-$current_ip = ""
-
+require File.join(APP_ROOT, 'lib', 'settings.rb')
 require File.join(APP_ROOT, 'lib', 'dyn-dnsimple.rb')
 
 EventMachine.run do
   # Refresh the IP upon initial load
-  DynDNSimple.refresh
+  DynDNSimple.refresh!
 
   # bring in the Sinatra web app
   require File.join(APP_ROOT, 'app', 'app.rb')
 
-  EventMachine.add_periodic_timer($config['update_frequency']) {
-    DynDNSimple.refresh
+  EventMachine.add_periodic_timer(@settings.update_frequency) {
+    DynDNSimple.refresh!
   }
 end

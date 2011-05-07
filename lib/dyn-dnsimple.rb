@@ -1,30 +1,39 @@
 class DynDNSimple
-  def self.refresh
-    DNSimple::Client.username = $config['dnsimple']['username']
-    DNSimple::Client.password = $config['dnsimple']['password']
+  def self.refresh!
+    @settings = Settings.new
+  
+    DNSimple::Client.username = @settings.dnsimple_username
+    DNSimple::Client.password = @settings.dnsimple_password
 
     @log = Logger.new( File.join(APP_ROOT, 'log', 'dyn-dnsimple.log'), 'daily' )
     @log.level = Logger::INFO
 
     EM::HttpRequest.new('http://icanhazip.com').get.callback { |http|
-      $current_ip = http.response.strip!
-      puts $current_ip
+      @settings.current_ip = http.response.strip!
+      @settings.save_to_config!
 
-      records = DNSimple::Record.all($config['domain'])
+      @log.info "DynDNSimple: Current External IP is #{@settings.current_ip}"
+
+      records = DNSimple::Record.all(@settings.domain)
 
       records.each do |record|
         #only update if the record is an A Record and the IP is different from the current external IP
         if self.need_to_update?(record)
-          @log.info "DynDNSimple: External IP is #{$current_ip}"
-          record.content = $current_ip.to_s #"1.2.3.4"
-          record.save
-          @log.info "DynDNSimple: New IP is #{record.content}"
+          self.update!
         end
       end
     }
   end
 
   def self.need_to_update?(record)
-    record.name == $config['hostname'] && record.record_type == "A" && record.content != $current_ip
+    @settings = Settings.new
+    record.name == @settings.hostname && record.record_type == "A" && record.content != @settings.current_ip
+  end
+
+  def self.update!
+    @settings = Settings.new
+    record.content = @settings.current_ip #"1.2.3.4"
+    record.save
+    @log.info "DynDNSimple: New External IP is #{record.content}"
   end
 end

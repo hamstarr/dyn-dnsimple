@@ -4,9 +4,24 @@
   /[if lt IE 9]
     %script{:src => "http://html5shim.googlecode.com/svn/trunk/html5.js"}
   %link{:href => "/css/style.css", :media => "screen", :rel => "stylesheet"}
-  %title= "DynDNSimple"
+  %title= "DynDNSimple Settings"
 %body
   %section.main
-    %h1 Your External IP: #{$current_ip}
-    %h2
-      %a{:href => "/refresh"} Update your IP &rarr;
+    %h1 DynDNSimple Settings
+    .settings
+      .ip.link
+        %a{:title => " Refresh your IP!", :href => "/refresh"} #{@settings.current_ip} 
+      .field
+        .label Username
+        .setting #{@settings.dnsimple_username}
+      .field
+        .label Password
+        .setting ***************
+      .field
+        .label Domain
+        .setting #{@settings.domain}
+      .field
+        .label Hostname
+        .setting #{@settings.hostname}
+      .link
+        %a{:href => "/settings"} Update your DynDNSimple Settings &rarr;

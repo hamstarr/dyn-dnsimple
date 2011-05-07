@@ -36,5 +36,5 @@ Open Terminal and do the following:
 ## TODO
 
 - Write tests
-- Allow update of config details form web interface
+- convert css to SCSS
 - Allow creation of an A record if one doesn't exist already

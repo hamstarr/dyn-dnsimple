@@ -5,3 +5,4 @@ domain: example.com
 hostname: remote
 update_frequency: 360
 http_port: 3333
+current_ip:0.0.0.0
