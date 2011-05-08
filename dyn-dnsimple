@@ -10,6 +10,10 @@ require 'dnsimple'
 
 APP_ROOT = File.dirname(__FILE__)
 
+
+$log = Logger.new( File.join(APP_ROOT, 'log', 'dyn-dnsimple.log'), 'daily' )
+$log.level = Logger::INFO
+
 require File.join(APP_ROOT, 'lib', 'settings.rb')
 require File.join(APP_ROOT, 'lib', 'dyn-dnsimple.rb')
 
@@ -20,7 +24,7 @@ EventMachine.run do
   # bring in the Sinatra web app
   require File.join(APP_ROOT, 'app', 'app.rb')
 
-  EventMachine.add_periodic_timer(@settings.update_frequency) {
+  EventMachine.add_periodic_timer($settings.update_frequency) {
     DynDNSimple.refresh!
   }
 end

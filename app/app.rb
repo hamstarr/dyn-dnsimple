@@ -8,21 +8,24 @@ class App < Sinatra::Base
   set :public, Proc.new { File.join(root, "public") }
 
   get '/' do
-    @settings = Settings.new
+    unless DynDNSimple.refreshable?
+      redirect '/settings'
+    end
+
     haml :index
   end
 
   get '/settings' do
-    @settings_form = Settings.new
     haml :settings
   end
 
   post '/settings' do
     @settings_form = Settings.new(params)
 
-    if @settings_form.valid?
+    if @settings_form.validate?(params)
       @settings_form.save_to_config!
-      #DynDNSimple.refresh
+      $settings = @settings_form
+      DynDNSimple.refresh!
       # flash that settings have been updated
       redirect '/'
     end
@@ -35,5 +38,4 @@ class App < Sinatra::Base
   end
 end
 
-@settings = Settings.new
-App.run!({:port => @settings.http_port})
+App.run!({:port => $settings.http_port})

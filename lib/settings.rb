@@ -1,8 +1,11 @@
 class Settings
-  attr_accessor :dnsimple_username, :dnsimple_password, :domain, 
+  attr_accessor :username, :password, :domain, 
                 :hostname, :update_frequency, :http_port, :current_ip, :errors
 
+  @config_file = ''
+
   def initialize(options = {})
+    @config_file = File.join(APP_ROOT, 'config', 'config.yml')
     load(options)
     self.errors ||= {}
   end
@@ -15,40 +18,65 @@ class Settings
   end
 
   def save_to_config!
-    settings = Hash.new
-    settings['dnsimple'] = Hash.new
-    settings['dnsimple']['username'] = self.dnsimple_username
-    settings['dnsimple']['password'] = self.dnsimple_password
-    settings['domain'] = self.domain
-    settings['hostname'] = self.hostname
-    settings['update_frequency'] = self.update_frequency
-    settings['http_port'] = self.http_port
-    settings['current_ip'] = self.current_ip
+    settings = {
+      :username => self.username,
+      :password => self.password,
+      :domain => self.domain,
+      :hostname => self.hostname,
+      :update_frequency => self.update_frequency,
+      :http_port => self.http_port,
+      :current_ip => self.current_ip
+    }
 
-    File.open(File.join(APP_ROOT, 'config', 'config.yml'), "w") do |file|
+    unless File.exist? @config_file
+      f = File.new(@config_file, "w")
+      f.close
+    end
+
+    File.open(@config_file, "w") do |file|
       file.write settings.to_yaml
     end
+    load
   end
 
   def load(options = {})
-    settings = YAML.load_file(File.join(APP_ROOT, 'config', 'config.yml'))
+    settings = {
+      :username => nil,
+      :password => nil,
+      :domain => nil,
+      :hostname => nil,
+      :update_frequency => 360,
+      :http_port => 3333,
+      :current_ip => nil
+    }
 
-    settings = options.any? ? settings.merge(options) : settings
+    if File.exist? @config_file
+      settings = YAML.load_file(@config_file)
+    end
 
-    self.dnsimple_username = settings['dnsimple']['username'] unless settings['dnsimple']['username'] == nil
-    self.dnsimple_password = settings['dnsimple']['password'] unless settings['dnsimple']['password'] == nil
-    self.domain = settings['domain'] unless settings['domain'] == nil
-    self.hostname = settings['hostname'] unless settings['hostname'] == nil
-    self.update_frequency = 360
-    self.http_port = settings['http_port']
-    self.current_ip = settings['current_ip'] unless settings['current_ip'] == nil
+    if options.any?
+      # convert the keys to symbols
+      options = options.inject({}){|option,(k,v)| option[k.to_sym] = v; option}
+      settings = settings.merge(options)
+    end
+
+    self.username = (settings[:username]) ? settings[:username] : nil
+    self.password = (settings[:password]) ? settings[:password] : nil
+    self.domain   = (settings[:domain])   ? settings[:domain]   : nil
+    self.hostname = (settings[:hostname]) ? settings[:hostname] : nil
+
+    self.update_frequency = (settings[:update_frequency] && settings[:update_frequency] >= 360) ? settings[:update_frequency] : 360
+    self.http_port = (settings[:http_port] && settings[:http_port] > 0) ? settings[:http_port] : 3333
+    self.current_ip = (settings[:current_ip]) ? settings[:current_ip] : nil
   end
 
-  def valid?
-    self.errors[:dnsimple_username] = "is required." if self.dnsimple_username.nil? || self.dnsimple_username.strip.empty?
-    self.errors[:dnsimple_password] = "is required." if self.dnsimple_password.nil? || self.dnsimple_password.strip.empty?
-    self.errors[:domain] = "is required." if self.domain.nil? || self.domain.empty?
-    self.errors[:hostname] = "is required." if self.hostname.nil? || self.hostname.empty?
+  def validate?(params)
+    self.errors[:username] = "is required." if params[:username].nil? || params[:username].strip.empty?
+    self.errors[:password] = "is required." if params[:password].nil? || params[:password].strip.empty?
+    self.errors[:domain] = "is required." if params[:domain].nil? || params[:domain].empty?
+    self.errors[:hostname] = "is required." if params[:hostname].nil? || params[:hostname].empty?
     self.errors.length == 0
   end
 end
+
+$settings = Settings.new

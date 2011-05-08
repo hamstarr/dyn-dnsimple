@@ -8,29 +8,29 @@
 %body
   %section.main
     %h1 Update Settings
-    -if !@settings_form.errors.empty?
+    -if !$settings.errors.empty?
       #error_container
         %p
           Ooops... Did you forget something?
           %ul
-          -@settings_form.errors.each do |field, error|
+          -$settings.errors.each do |field, error|
             %li #{field.to_s.gsub('_', ' ').capitalize} #{error}
     %section#form.section.settings
       %form{:action => "", :method => "post"}
         .ip.link
-          %a{:title => " Refresh your IP!", :href => "/refresh"} #{@settings_form.current_ip}
+          %a{:title => " Refresh your IP!", :href => "/refresh"} #{$settings.current_ip}
         .field
-          %label{:for => "dnsimple_username"} Username
-          %input#dnsimple_username{:name => "dnsimple_username", :value => @settings_form.dnsimple_username, :type => "text"}
+          %label{:for => "username"} Username
+          %input#username{:name => "username", :value => $settings.username, :type => "text"}
         .field
-          %label{:for => "dnsimple_password"} Password
-          %input#dnsimple_password{:name => "dnsimple_password", :value => @settings_form.dnsimple_password, :placeholder => "name@example.com", :type => "password"}
+          %label{:for => "password"} Password
+          %input#password{:name => "password", :value => $settings.password, :placeholder => "********", :type => "password"}
         .field
           %label{:for => "domain"} Domain
-          %input#domain{:name => "domain", :value => @settings_form.domain, :placeholder => "example.com", :type => "text"}
+          %input#domain{:name => "domain", :value => $settings.domain, :placeholder => "example.com", :type => "text"}
         .field
           %label{:for => "hostname"} Hostname
-          %input#hostname{:name => "hostname", :value => @settings_form.hostname, :placeholder => "remote", :type => "text"}
+          %input#hostname{:name => "hostname", :value => $settings.hostname, :placeholder => "www", :type => "text"}
         .button.link
           %input{:type => "submit", :value => "Save Settings  →"}
           or
