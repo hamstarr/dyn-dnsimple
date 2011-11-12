@@ -17,7 +17,7 @@ class Settings
     self.errors ||= {}
   end
 
-  def save_to_config!
+  def save!
     settings = {
       :username => self.username,
       :password => self.password,
@@ -50,9 +50,7 @@ class Settings
       :current_ip => nil
     }
 
-    if File.exist? @config_file
-      settings = YAML.load_file(@config_file)
-    end
+    settings = YAML.load_file(@config_file) if File.exist? @config_file
 
     if options.any?
       # convert the keys to symbols
@@ -60,10 +58,10 @@ class Settings
       settings = settings.merge(options)
     end
 
-    self.username = (settings[:username]) ? settings[:username] : nil
-    self.password = (settings[:password]) ? settings[:password] : nil
-    self.domain   = (settings[:domain])   ? settings[:domain]   : nil
-    self.hostname = (settings[:hostname]) ? settings[:hostname] : nil
+    self.username = settings[:username]
+    self.password = settings[:password]
+    self.domain   = settings[:domain]
+    self.hostname = settings[:hostname]
 
     self.update_frequency = (settings[:update_frequency] && settings[:update_frequency] >= 360) ? settings[:update_frequency] : 360
     self.http_port = (settings[:http_port] && settings[:http_port] > 0) ? settings[:http_port] : 3333

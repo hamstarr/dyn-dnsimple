@@ -10,7 +10,6 @@ require 'dnsimple'
 
 APP_ROOT = File.dirname(__FILE__)
 
-
 $log = Logger.new( File.join(APP_ROOT, 'log', 'dyn-dnsimple.log'), 'daily' )
 $log.level = Logger::INFO
 

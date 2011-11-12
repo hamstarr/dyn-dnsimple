@@ -5,13 +5,10 @@ class App < Sinatra::Base
 
   set :root, File.join(File.dirname(__FILE__), "..") 
   set :views, Proc.new { File.join(root, "app", "views") }
-  set :public, Proc.new { File.join(root, "public") }
+  set :public_folder, Proc.new { File.join(root, "public") }
 
   get '/' do
-    unless DynDNSimple.refreshable?
-      redirect '/settings'
-    end
-
+    redirect '/settings' unless DynDNSimple.refreshable?
     haml :index
   end
 
