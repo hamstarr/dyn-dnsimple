@@ -23,6 +23,7 @@ EventMachine.run do
   # bring in the Sinatra web app
   require File.join(APP_ROOT, 'app', 'app.rb')
 
+  # check for dns changes every $settings.update_frequency times
   EventMachine.add_periodic_timer($settings.update_frequency) {
     DynDNSimple.refresh!
   }

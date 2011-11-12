@@ -17,7 +17,7 @@ class Settings
     self.errors ||= {}
   end
 
-  def save!
+  def save
     settings = {
       :username => self.username,
       :password => self.password,
