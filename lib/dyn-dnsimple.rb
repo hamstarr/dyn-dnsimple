@@ -8,7 +8,6 @@ class DynDNSimple
     EM::HttpRequest.new('http://icanhazip.com').get.callback do |http|
       $settings.current_ip = http.response.strip!
       $settings.save
-
       $log.info "DynDNSimple: Current External IP is #{$settings.current_ip}"
       update_record
     end
@@ -36,6 +35,6 @@ class DynDNSimple
   def self.need_to_update?(record)
     record.name == $settings.hostname && 
     record.record_type == "A" && 
-    record.content == $settings.current_ip
+    record.content != $settings.current_ip
   end
 end

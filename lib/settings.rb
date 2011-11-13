@@ -1,8 +1,6 @@
 class Settings
-  attr_accessor :username, :password, :domain, 
-                :hostname, :update_frequency, :http_port, :current_ip, :errors
-
-  @config_file = ''
+  attr_accessor :username, :password, :domain, :hostname, :update_frequency, 
+                :http_port, :current_ip, :errors
 
   def initialize(options = {})
     @config_file = File.join(APP_ROOT, 'config', 'config.yml')

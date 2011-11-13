@@ -8,7 +8,7 @@
 %body
   %section.main
     %h1 Update Settings
-    -if !$settings.errors.empty?
+    - unless $settings.errors.empty?
       #error_container
         %p
           Ooops... Did you forget something?
